@@ -1,0 +1,25 @@
+<div class="top-wrapper-books">
+	<div class="container-fluid container-books">
+		<div class="book-list-wrapper">
+			<ul class="searched-books list-inline">
+				<li class="searched-book col-xs-4 col-sm-3 col-md-3" ng-repeat="book in books">
+					<a class="book-card" ng-click='openModal(book)'>
+						<div class="book-pic-wrapper">
+							<img class="center-block" ng-attr-src="{{ book.img_path }}" alt="이미지 없음" onError="this.onerror=null;this.src='http://static.naver.net/book/image/noimg3.gif'">
+						</div>
+						<dl class="book-property">
+							<dt>제목</dt>
+							<dd class="book-title">{{ book.title }}</dd>
+							<dt>작가</dt>
+							<dd class="book-writer">{{ book.writer }}</dd>
+							<dt>출판사</dt>
+							<dd class="book-publisher">{{ book.publisher }}</dd>
+						</dl>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<ng-include src="bookTemplate"></ng-include>
+<div class="working-bg" ng-show="isWorking"></div>

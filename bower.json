@@ -1,0 +1,32 @@
+{
+  "name": "book-bank",
+  "private": true,
+  "version": "0.0.1",
+  "homepage": "https://github.com/unitimes/bookbank.git",
+  "authors": [
+    "unitimes <unitimes@naver.com>"
+  ],
+  "description": "keep book reviews and debate",
+  "main": "index.js",
+  "moduleType": [
+    "amd",
+    "es6",
+    "node"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.2",
+    "bootstrap": "~3.3.5",
+    "angular-route": "~1.4.2",
+    "angular-resource": "~1.4.2",
+    "angular-ui-router": "~0.2.15",
+    "validator-js": "~3.42.0"
+  }
+}

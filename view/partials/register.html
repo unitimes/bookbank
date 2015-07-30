@@ -1,0 +1,28 @@
+<div class="register-box-horizontal">
+	<div class="register-wrapper">
+		<div class="register-wrapper-vertical">
+			<div class="register-wrapper-horizontal">
+				<form ng-submit="register()">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input id="name" type="text" class="form-control" placeholder="Name" ng-model='rUser.name'>
+					</div>
+					<div class="form-group">
+						<label for="email">Email address</label>
+						<input id="email" type="text" class="form-control" placeholder="Email" ng-model='rUser.email'>
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input id="password" type="password" class="form-control" placeholder="Password" ng-model='rUser.password'>
+					</div>
+					<div class="form-group">
+						<label for="confirm-password">Confirm Password</label>
+						<input id="confirm-password" type="password" class="form-control" placeholder="Password" ng-model='rUser.confirmPassword'>
+					</div>
+					<button class="btn btn-info btn-register" type="button" ng-click="register()">Register</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<span class="register-box-msg">로그인을 하시려면: <a href="javascript:void(0)" ng-click='changeTo("login")'>로그인</a></span>
+</div>

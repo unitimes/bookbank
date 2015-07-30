@@ -1,0 +1,190 @@
+html, body {
+	height: 100%;
+}
+body {
+	background-color: #e5e5e5;
+}
+.overflow-hidden {
+	overflow: hidden;
+}
+.working-bg {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+}
+
+
+.container-books {
+	max-width: 1100px;
+}
+
+
+.wrapper-create-book {
+	margin-top: 10px;
+	position: fixed;
+	width: 100%;
+	padding-bottom: 10px;
+	z-index: 90;
+}
+.box-create-book {
+	background-color: #ffffff;
+	border-radius: 5px;
+}
+.container-create-book {
+	max-width: 1100px;
+}
+.searched-book {
+	z-index: 100;
+}
+a.book-card, a.book-card:hover, a.book-card:focus {
+	text-decoration: none;
+	color: black;
+	background-color: #ffffff;
+
+	display: block;
+	height: 280px;
+	padding: 15px 10px;
+	margin: 5px 0;
+	border-radius: 5px;
+}
+.book-pic-wrapper {
+	height: 130px;
+}
+.book-pic-wrapper>img {
+	width: 82px;
+}
+dl.book-property {
+	padding: 0px 10px;
+}
+.book-property>dd {
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 100%;
+}
+
+
+
+/*modal*/
+.modal-bg {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	overflow-y: scroll;
+	z-index: 900;
+}
+.modal-container {
+	max-width: 800px;
+	z-index: 910;
+}
+.modal-box {
+	background-color: #ffffff;
+	margin: 30px 0px;
+	border-radius: 5px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.modal-header-wrapper {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.book-pic-box {
+	height: 400px;
+	display: table;
+}
+.modal-book-pic-wrapper {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.modal-book-pic-wrapper img {
+	width: 230px;
+}
+.book-info-box {
+	display: table;
+	height: 400px;
+}
+.modal-box dl.book-property {
+	display: table-cell;
+	vertical-align: middle;
+}
+.modal-box .form-horizontal {
+	padding: 20px;
+}
+.modal-box .book-reply {
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.modal-box .form-horizontal button {
+	float: right;
+}
+.modal-box ul.replies {
+	padding: 5px 20px;
+}
+.modal-box ul.replies li {
+	margin-top: 20px;
+}
+.modal-box .reply-edited-time {
+	font-size: 0.8em;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+
+.modal-bg-table {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+.login-box-vertical {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.login-box-horizontal,
+.register-box-horizontal{
+	display: inline-block;
+	height: 300px;
+	width: 300px;
+	background-color: #ffffff;
+	border-radius: 5px;
+	position: relative;
+}
+.register-box-horizontal {
+	height: 400px;
+}
+.login-wrapper,
+.register-wrapper{
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+.login-wrapper-vertical,
+.register-wrapper-vertical{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.login-wrapper-horizontal,
+.register-wrapper-horizontal{
+	display: inline-block;
+	text-align: left;
+	width: 250px;
+}
+.btn-login,
+.btn-register{
+	width: 100%;
+}
+.login-box-horizontal span,
+.register-box-horizontal span{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}

@@ -1,0 +1,52 @@
+<nav class="navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">BookBank</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li ng-class="{active: isSelected('books')}"><a href="javascript:void(0)" ui-sref='books' ng-click="toggleActive('books')">책목록<span class="sr-only">(current)</span></a></li>
+				<li ng-class="{active: isSelected('bookNew')}"><a href="javascript:void(0)" ui-sref='booksNew' ng-click="toggleActive('bookNew')">책등록</a></li>
+			</ul>
+			<form class="navbar-form navbar-left" ng-submit='searchBooks()' ng-if="isSelected('books')">
+				<select class="form-control" ng-model='bookSearchQuery.semester'>
+					<option value="">전체</option>
+					<option value="1502">15년2학기</option>
+					<option value="1503">15년3학기</option>
+					<option value="1601">16년1학기</option>
+					<option value="1602">16년2학기</option>
+					<option value="1603">16년3학기</option>
+				</select>
+			<div class="form-group">
+			<input type="text" class="form-control" placeholder="Search" ng-model='bookSearchQuery.keywords'>
+			</div>
+			<button type="button" class="btn btn-default" ng-click='searchBooks()'>검색</button>
+			</form>
+			<ul class="nav navbar-nav navbar-right" ng-if='loginFlag'>
+				<li><a href="javascript:void(0)" ng-click="logout()">로그아웃</a></li>
+			</ul>
+			<!--<ul class="nav navbar-nav navbar-right">-->
+			<!--<li><a href="#">Link</a></li>-->
+			<!--<li class="dropdown">-->
+			<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+			<!--<ul class="dropdown-menu">-->
+			<!--<li><a href="#">Action</a></li>-->
+			<!--<li><a href="#">Another action</a></li>-->
+			<!--<li><a href="#">Something else here</a></li>-->
+			<!--<li role="separator" class="divider"></li>-->
+			<!--<li><a href="#">Separated link</a></li>-->
+			<!--</ul>-->
+			<!--</li>-->
+			<!--</ul>-->
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

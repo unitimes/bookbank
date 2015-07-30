@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bookBank">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<title>book-bank</title>
+		<base href='/' />
+		<link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.css" media="all">
+		<link rel="stylesheet" href="static/css/app.css" media="all">
+		<script src="static/bower_components/jquery/dist/jquery.js"></script>
+		<script src="static/bower_components/angular/angular.js"></script>
+		<script src="static/bower_components/angular-resource/angular-resource.js"></script>
+		<script src="static/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script src="static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script src="static/bower_components/validator-js/validator.js"></script>
+		<script src="static/js/app.js"></script>
+		<script src="static/js/controllers.js"></script>
+		<script src="static/js/services.js"></script>
+		<script src="static/js/directives.js"></script>
+	</head>
+	<body ng-controller='NavbarCtrl' ng-class='overflow'>
+		<div class="wrapper-header" ng-include="'static/partials/header.html'"></div>
+		<div ui-view></div>
+	</body>
+	<div class="working-bg" ng-show="isWorking"></div>
+</html>
