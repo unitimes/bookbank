@@ -5,7 +5,8 @@
   "description": "keep book reviews and debate",
   "main": "index.js",
   "scripts": {
-    "start": "node-inspector & nodemon --debug index.js"
+		"start": "npde index.js",
+    "startDev": "node-inspector & nodemon --debug index.js"
   },
   "repository": {
     "type": "git",
