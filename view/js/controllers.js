@@ -22,22 +22,23 @@
 		$scope.login = function() {
 			$scope.$emit('working', true);
 			var msg = Auth.post({new: 'new'}, $scope.user, function() {
+				if (msg.err)
+					$window.alert(msg.err);
 				if (!msg.err) {
-					$scope.$emit('working', false);
 					$scope.$emit('loginCompleted');
-					return;
 				}
-				$window.alert(msg.err);
+				$scope.$emit('working', false);
 			});
 		};
 		$scope.register = function() {
+			var msg;
 			if (!$scope.rUser.name) {
 				angular.element('#name').focus();
 				$window.alert('이름을 입력해야 합니다.');
 				return;
 			}
 			if (!$scope.rUser.email || !validator.isEmail($scope.rUser.email)) {
-				var msg = '유효한 이메일 형식이 아닙니다.';
+				msg = '유효한 이메일 형식이 아닙니다.';
 				angular.element('#email').focus();
 				if (!$scope.rUser.email)
 					msg = '메일 주소를 입력해야 합니다.';
@@ -54,7 +55,7 @@
 				$window.alert('비밀번호가 일치하지 않습니다.');
 				return;
 			}
-			var msg = Auth.save(null, $scope.rUser, function() {
+			msg = Auth.save(null, $scope.rUser, function() {
 				if (!msg.err) {
 					$window.alert('가입 되었습니다.');
 					$scope.changeTo('login');
@@ -62,7 +63,7 @@
 				}
 				$window.alert(msg.err);
 			});
-		}
+		};
 	}])
 	.controller('NavbarCtrl', ['$scope', '$state','Books', 'Auth', function($scope, $state, Books, Auth) {
 		$scope.bookSearchQuery = {};

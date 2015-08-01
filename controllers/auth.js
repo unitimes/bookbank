@@ -20,13 +20,13 @@ router.post('/new', bodyParser.json(), function(req, res, next) {
 			next(err);
 			return;
 		}
-		var err = {};
-		var oUser = user[0].toObject();
-		if (user.length === 0) {
+		err = {};
+		if (!user || user.length === 0) {
 			err.sendKey = 'noUser';
 			next(err);
 			return;
 		}
+		var oUser = user[0].toObject();
 		if (oUser.password !== req.body.password) {
 			err.sendKey = 'wrongPassword';
 			next(err);
