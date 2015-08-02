@@ -3,6 +3,7 @@
 
 	var bookBankControllers = angular.module('bookBankControllers', [
 		'bookBankServices',
+		'ngCookies',
 		'ui.router'
 	]);
 
@@ -65,10 +66,10 @@
 			});
 		};
 	}])
-	.controller('NavbarCtrl', ['$scope', '$state','Books', 'Auth', function($scope, $state, Books, Auth) {
+	.controller('NavbarCtrl', ['$scope', '$state', '$cookies', 'Books', 'Auth', function($scope, $state, $cookies, Books, Auth) {
 		$scope.bookSearchQuery = {};
 		$scope.isWorking = false;
-		$scope.loginFlag = false;
+		$scope.loginFlag = $cookies.get('user');
 		$scope.toggleActive = function(sState) {
 			$scope.selected = sState;
 		};
@@ -97,27 +98,67 @@
 			});
 		};
 	}])
-	.controller('BooksCtrl', ['$scope', '$window', 'Books', 'Reply', 'ParseDate', function($scope, $window, Books, Reply, ParseDate) {
+	.controller('BooksCtrl', ['$scope', '$window', '$cookies', 'Books', 'Book', 'Comment', 'Reply', 'ParseDate', function($scope, $window, $cookies, Books, Book, Comment, Reply, ParseDate) {
+		//ui router state change
 		$scope.$parent.selected = 'books';
-		$scope.books = [];
 		$scope.books = Books.query();
 		$scope.bookTemplate = "";
-		$scope.isWorking = false;
 		$scope.parseDate = ParseDate;
+		$scope.oUser = JSON.parse($cookies.get('user').slice(2));
 		$scope.openModal = function(book) {
+			initModalModel();
+			copyBookToModalModel(book);
+			getComment();
+			getReplies();
+			$scope.bookTemplate = 'static/partials/book.html';
+		};
+		var initModalModel = function() {
+			$scope.commentFlag = false;
+			$scope.commentEditFlag = false;
 			$scope.$parent.overflow = 'overflow-hidden';
 			$scope.book = {};
-			$scope.book.selector = book.selector.name;
+			$scope.replies = {};
+			$scope.comment = {};
+			$scope.reply = {};
+		}
+		var copyBookToModalModel = function(book) {
+			$scope.book.selector = book.selector;
+			$scope.book.created_time = $scope.parseDate(book.created_time);
 			$scope.book._id = book._id;
 			$scope.book.title = book.title;
 			$scope.book.writer = book.writer;
 			$scope.book.publisher = book.publisher;
 			$scope.book.info_link = book.info_link;
 			$scope.book.img_path = book.img_path.slice(0, book.img_path.lastIndexOf('?'));
-			$scope.bookTemplate = 'static/partials/book.html';
-			//$window.history.pushState('', 'book', 'books/' + book._id);
-			$scope.reply = {};
-			getReplies();
+		}
+		var getComment = function() {
+			$scope.comment = {};
+			Comment.get({ 'bookId': $scope.book._id }, function(comment) {
+				if (comment.content) {
+					$scope.commentFlag = true;
+					$scope.comment = comment;
+					return;
+				}
+				$scope.commentFlag = false;
+			});
+		}
+		$scope.createComment = function() {
+			$scope.comment.related_book = {};
+			$scope.comment.related_book._id = $scope.book._id;
+			$scope.comment.related_book.title = $scope.book.title;
+			var successor = function() {
+				$window.alert('등록이 완료 되었습니다.');
+				$scope.commentEditFlag = false;
+				getComment();
+			}
+			if (!$scope.commentFlag) {
+				Comment.save({ 'bookId': $scope.book._id, 'flag': 'new' }, $scope.comment, successor);
+				return;
+			}
+			Comment.update({ 'bookId': $scope.book._id, }, $scope.comment, successor);
+		};
+		$scope.openCommentEditor = function() {
+			$scope.commentEditFlag = true;
 		};
 		$scope.closeModal = function() {
 			$scope.$parent.overflow = '';
@@ -125,17 +166,16 @@
 			$scope.reply = {};
 		};
 		$scope.createReply = function() {
-			$scope.isWorking = true;
 			$scope.reply.created_time = new Date().toISOString(); 
 			$scope.reply.edited_time = new Date().toISOString(); 
 			Reply.save({bookId: $scope.book._id, flag: 'new'}, $scope.reply, function() {
 				$window.alert('등록이 완료 되었습니다.');
 				$scope.reply = {};
-				$scope.isWorking = false;
 				getReplies();
 			});
 		};
 		var getReplies = function() {
+			$scope.replies = {};
 			Reply.query({bookId: $scope.book._id}, function(aReplies) {
 				$scope.replies = aReplies;
 			});
@@ -143,11 +183,46 @@
 		$scope.$on('bookSearchCompletion', function(e, aBooks) {
 			$scope.books = aBooks;
 		});
+		$scope.deleteBook = function(book) {
+			var deleteFlag = $window.confirm('삭제하시겠습니까?');
+			if (deleteFlag) {
+				$scope.$emit('working', true);
+				Book.delete({ "bookId": book._id }, function() {
+					var idx = $scope.books.indexOf(book);
+					$window.alert('삭제되었습니다.');
+					$scope.books.splice(idx, 1);
+					$scope.$emit('working', false);
+				});
+			}
+		};
+		$scope.deleteComment = function(comment) {
+			var deleteFlag = $window.confirm('삭제하시겠습까?');
+			if (deleteFlag) {
+				$scope.$emit('working', true);
+				Comment.delete({ "bookId": $scope.book._id, "flag": comment._id }, function() {
+					$window.alert('삭제되었습니다.');
+					getComment();
+					$scope.$emit('working', false);
+				});
+			}
+		}
+		$scope.deleteReply = function(book, reply) {
+			var deleteFlag = $window.confirm('삭제하시겠습까?');
+			if (deleteFlag) {
+				$scope.$emit('working', true);
+				Reply.delete({ "bookId": book._id, "flag": reply._id }, function() {
+					var idx = $scope.replies.indexOf(reply);
+					$window.alert('삭제되었습니다.');
+					$scope.replies.splice(idx, 1);
+					$scope.$emit('working', false);
+				});
+			}
+		};
 	}])
 	.controller('CreateBookCtrl', ['$scope', '$window', 'Book', function($scope, $window, Book) {
+		$scope.createBoxFlag = false;
 		$scope.$parent.selected = 'bookNew';
 		$scope.book = {};
-		$scope.isWorking = false;
 		$scope.$watch('book', function(oBook) {
 			if (oBook.title && oBook.semester) {
 				$scope.book.flag = true;
@@ -156,12 +231,11 @@
 			}
 		}, true);
 		$scope.createBook = function() {
-			$scope.isWorking = true;
+			$scope.book.created_time = new Date().toISOString();
 			Book.save({bookId: 'new'}, $scope.book, function() {
 				$window.alert('등록이 완료 되었습니다.');
 				$scope.book = {};
 				$scope.query = "";
-				$scope.isWorking = false;
 			});
 		};
 		$scope.searchBooks = function() {
@@ -175,6 +249,7 @@
 			});
 		};
 		$scope.fillInputs = function(oBook) {
+			$scope.createBoxFlag = true;
 			$scope.book.title = oBook.title;
 			$scope.book.writer = oBook.writer;
 			$scope.book.publisher = oBook.publisher;

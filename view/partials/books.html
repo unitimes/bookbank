@@ -4,6 +4,7 @@
 			<ul class="searched-books list-inline">
 				<li class="searched-book col-xs-4 col-sm-3 col-md-3" ng-repeat="book in books">
 					<a class="book-card" ng-click='openModal(book)'>
+						<button type="button" class="close" aria-label="Close" ng-click='deleteBook(book);$event.stopPropagation();' ng-if='oUser.id === book.selector._id'><span aria-hidden="true">&times;</span></button>
 						<div class="book-pic-wrapper">
 							<img class="center-block" ng-attr-src="{{ book.img_path }}" alt="이미지 없음" onError="this.onerror=null;this.src='http://static.naver.net/book/image/noimg3.gif'">
 						</div>
@@ -14,6 +15,10 @@
 							<dd class="book-writer">{{ book.writer }}</dd>
 							<dt>출판사</dt>
 							<dd class="book-publisher">{{ book.publisher }}</dd>
+							<dt>선정자</dt>
+							<dd class='book-selector'>{{ book.selector.name }}</dd>
+							<dt>선정일</dt>
+							<dd class='book-created-time'>{{ parseDate(book.created_time) }}</dd>
 						</dl>
 					</a>
 				</li>
@@ -22,4 +27,3 @@
 	</div>
 </div>
 <ng-include src="bookTemplate"></ng-include>
-<div class="working-bg" ng-show="isWorking"></div>

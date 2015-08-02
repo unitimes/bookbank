@@ -11,6 +11,7 @@
 		<script src="static/bower_components/angular/angular.js"></script>
 		<script src="static/bower_components/angular-resource/angular-resource.js"></script>
 		<script src="static/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script src="static/bower_components/angular-cookies/angular-cookies.js"></script>
 		<script src="static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="static/bower_components/validator-js/validator.js"></script>
 		<script src="static/js/app.js"></script>
@@ -21,6 +22,6 @@
 	<body ng-controller='NavbarCtrl' ng-class='overflow'>
 		<div class="wrapper-header" ng-include="'static/partials/header.html'"></div>
 		<div ui-view></div>
+		<div class="working-bg" ng-show="isWorking"></div>
 	</body>
-	<div class="working-bg" ng-show="isWorking"></div>
 </html>

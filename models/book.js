@@ -9,6 +9,7 @@ var bookSchema = new Schema({
 	publisher: String,
 	img_path: String,
 	semester: Number,
+	created_time: Date,
 	selector: {
 		_id: { type: Schema.Types.ObjectId, ref: 'User' },
 		name: String
@@ -19,6 +20,9 @@ var Book = mongoose.model('Book', bookSchema);
 exports.create = function(book, fCallback) {
 	return Book.create(book, fCallback);
 }; 
+exports.remove = function(bookId, fCallback) {
+	return Book.remove({ '_id': bookId }, fCallback);
+};
 exports.getAll = function(fCallback) {
 	return Book.find({}, null, { sort: { _id: -1}}, fCallback);
 };

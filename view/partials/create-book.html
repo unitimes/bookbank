@@ -2,7 +2,15 @@
 	<div class="container-fluid container-create-book">
 		<div class="row">
 			<div class="col-sm-3 col-md-3 box-create-book">
-				<form ng-submit="createBook()">
+				<form ng-submit="searchBooks()">
+					<div class="form-group">
+						<input class="form-control" type="text" ng-model="query">
+					</div>
+					<div class="form-group">
+						<button class="btn btn-default" type="button" ng-click="searchBooks()">검색</button>
+					</div>
+				</form>
+				<form ng-submit="createBook()" ng-show='createBoxFlag'>
 					<div class="form-group">
 						<label class="control-label" for="inputTitle">Title</label>
 						<input id="inputTitle" class="form-control" type="text" ng-model="book.title" disabled>
@@ -30,14 +38,6 @@
 						<button class="btn btn-default" ng-cob-disable-checker ng-cob-attr-flag="book.flag">등록</button>
 					</div>
 				</form>
-				<form ng-submit="searchBooks()">
-					<div class="form-group">
-						<input class="form-control" type="text" ng-model="query">
-					</div>
-					<div class="form-group">
-						<button class="btn btn-default" type="button" ng-click="searchBooks()">검색</button>
-					</div>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -61,9 +61,8 @@
 				</a>
 			</li>
 		</ul>
-		<div class="col-md-offset-3" ng-if="oSearchedBooks.moreBooksFlag">
+		<div class="col-sm-offset-3 col-md-offset-3" ng-if="oSearchedBooks.moreBooksFlag">
 			<button class="btn btn-default glyphicon glyphicon-menu-down center-block" type="button" ng-click="searchNextPage()"></button>
 		</div>
 	</div>
 </div>
-<div class="working-bg" ng-show="isWorking"></div>

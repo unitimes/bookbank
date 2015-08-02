@@ -34,17 +34,6 @@ router.use(function(req, res, next) {
 	}
 	next();
 });
-//router.use(function(req, res, next) {
-//if (!req.xhr) {
-//next();
-//return;
-//}
-//if (!req.session.user.id && req.baseUrl !== '/home' && req.url !== '/home') {
-//res.redirect('/home');
-//return;
-//}
-//next();
-//});
 router.use(function(req, res, next) {
 	if (req.xhr) {
 		res.append('Cache-Control', 'no-cache, no-store, must-revalidate');

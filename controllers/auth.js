@@ -32,11 +32,9 @@ router.post('/new', bodyParser.json(), function(req, res, next) {
 			next(err);
 			return;
 		}
-			//return res.status(200).json( { 'err': msg.errors.noUser });
-		//if (user.password !== req.body.password)
-			//return res.status(200).json( { 'err': msg.errors.wrongPassword });
 		req.session.user.id = oUser._id;
 		req.session.user.name = oUser.name;
+		res.cookie('user', req.session.user);
 		res.sendStatus(200);
 	});
 });

@@ -17,9 +17,12 @@ router.get('/', function(req, res, next) {
 	var aKeywords,
 	semester,
 	fCallback = function(err, aBooks) {
-		if(err)
+		if(err) {
 			next(err);
+			return;
+		}
 		res.status(200).send(aBooks);
+		return;
 	};
 
 	if (req.query.keywords) {
@@ -76,9 +79,20 @@ router.get('/search', function(req, res) {
 });
 router.get('/:id', function(req, res, next) {
 	book.getById(req.params.id, function(err, book) {
-		if (err)
+		if (err) {
 			next(err);
+			return;
+		}
 		res.status(200).send(book);
+	});
+});
+router.delete('/:id', function(req, res, next) {
+	book.remove(req.params.id, function(err) {
+		if(err) {
+			next(err);
+			return;
+		}
+		res.sendStatus(200);
 	});
 });
 router.post('/:id/replies/new', bodyParser.json(), function(req, res, next) {
@@ -92,6 +106,15 @@ router.post('/:id/replies/new', bodyParser.json(), function(req, res, next) {
 		res.sendStatus(200);
 	});
 });
+router.delete('/:id/replies/:replyId', function(req, res, next) {
+	reply.remove(req.params.replyId, function(err) {
+		if (err) {
+			next(err);
+			return;
+		}
+		res.sendStatus(200);
+	});
+});
 router.get('/:id/replies', function(req, res, next) {
 	reply.findByBookId(req.params.id, function(err, aReplies) {
 		if (err)
@@ -99,5 +122,10 @@ router.get('/:id/replies', function(req, res, next) {
 		res.status(200).send(aReplies);
 	});
 });
+
+router.use('/:id/comments', function(req, res, next) {
+	req.bookId = req.params.id;
+	next();
+}, require('./books/comments'));
 
 module.exports = router;

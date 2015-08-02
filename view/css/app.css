@@ -25,7 +25,6 @@ body {
 
 .wrapper-create-book {
 	margin-top: 10px;
-	position: fixed;
 	width: 100%;
 	padding-bottom: 10px;
 	z-index: 90;
@@ -46,10 +45,13 @@ a.book-card, a.book-card:hover, a.book-card:focus {
 	background-color: #ffffff;
 
 	display: block;
-	height: 280px;
+	height: 360px;
 	padding: 15px 10px;
 	margin: 5px 0;
 	border-radius: 5px;
+}
+a.book-card .close {
+	margin-top: -12px;
 }
 .book-pic-wrapper {
 	height: 130px;
@@ -115,25 +117,60 @@ dl.book-property {
 	display: table-cell;
 	vertical-align: middle;
 }
+.modal-box .comment-box {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: #FAF8F5;
+}
+.modal-box .comment-content {
+	white-space: pre-line;
+}
 .modal-box .form-horizontal {
 	padding: 20px;
 }
-.modal-box .book-reply {
+.modal-box .book-reply,
+.modal-box .comment-reply {
 	width: 100%;
 	border: 1px solid rgba(0, 0, 0, 0.2);
+	resize: none;
+	white-space: pre-line;
+}
+.modal-box .icon-comment,
+.modal-box .icon-reply {
+	margin-left: 5px;
+	font-size: 0.6em;
+	vertical-align: top;
+}
+.modal-box .reply-box {
+	margin-bottom: -20px;
 }
 .modal-box .form-horizontal button {
 	float: right;
 }
 .modal-box ul.replies {
 	padding: 5px 20px;
+	border-top: 1px solid #C7C7C7;
 }
 .modal-box ul.replies li {
-	margin-top: 20px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #EEEEEC;
+}
+.modal-box .reply-replier {
+	color: #1C86EE;
+}
+.modal-box .reply-content {
+	white-space: pre-line;
 }
 .modal-box .reply-edited-time {
 	font-size: 0.8em;
 	color: rgba(0, 0, 0, 0.5);
+}
+.modal-box .wrapper-btn-book-reply-submit {
+	padding-left: 0px;
+}
+.modal-box .btn-book-reply-submit {
+	width: 100%;
+	height: 106px;
 }
 
 
@@ -187,4 +224,22 @@ dl.book-property {
 	bottom: 0;
 	left: 0;
 	right: 0;
+}
+
+@media (min-width: 768px) {
+	.wrapper-create-book {
+		position: fixed;
+	}
+	.box-create-book {
+		padding-top: 15px;
+	}
+}
+@media (max-width: 767px) {
+	.box-create-book {
+		padding-top: 20px;
+		padding-bottom: 5px;
+	}
+	.searched-book {
+		float: none;
+	}
 }
