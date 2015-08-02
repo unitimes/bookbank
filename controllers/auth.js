@@ -2,8 +2,15 @@ var express = require('express'),
 	validator = require('validator'),
 	msg = require('../enum/msg'),
 	router = express.Router(),
+	crypto = require('crypto'),
+	shasum = crypto.createHash('sha512'),
 	bodyParser = require('body-parser'),
 	user = require('../models/user');
+
+var makeHash = function(data) {
+	shasum.update(data, 'utf8');
+	return shasum.digest('base64');
+};
 
 router.delete('/', function(req, res, next) {
 	req.session.user = {};
@@ -27,7 +34,8 @@ router.post('/new', bodyParser.json(), function(req, res, next) {
 			return;
 		}
 		var oUser = user[0].toObject();
-		if (oUser.password !== req.body.password) {
+		var hashedPassword = makeHash(req.body.password);
+		if (oUser.password !== hashedPassword) {
 			err.sendKey = 'wrongPassword';
 			next(err);
 			return;
@@ -39,6 +47,7 @@ router.post('/new', bodyParser.json(), function(req, res, next) {
 	});
 });
 router.post('/', bodyParser.json(), function(req, res, next) {
+	req.body.password = makeHash(req.body.password);
 	user.create(req.body, function(err, user) {
 		if (err && err.code === 11000) {
 			err.sendKey = 'dupEmail';
