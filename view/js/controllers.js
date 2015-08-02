@@ -11,13 +11,13 @@
 	.controller('HomeCtrl', ['$scope', '$window', 'Auth', function($scope, $window, Auth) {
 		$scope.user = {};
 		$scope.rUser = {};
-		$scope.homeModalTemplate = 'static/partials/login.html';
+		$scope.homeModalTemplate = 'bookbank/static/partials/login.html';
 		$scope.changeTo = function(sPage) {
 			if (sPage === "login") {
-				$scope.homeModalTemplate = 'static/partials/login.html';
+				$scope.homeModalTemplate = 'bookbank/static/partials/login.html';
 				return;
 			}
-			$scope.homeModalTemplate = 'static/partials/register.html';
+			$scope.homeModalTemplate = 'bookbank/static/partials/register.html';
 			return;
 		};
 		$scope.login = function() {
@@ -110,7 +110,7 @@
 			copyBookToModalModel(book);
 			getComment();
 			getReplies();
-			$scope.bookTemplate = 'static/partials/book.html';
+			$scope.bookTemplate = 'bookbank/static/partials/book.html';
 		};
 		var initModalModel = function() {
 			$scope.commentFlag = false;
@@ -120,7 +120,7 @@
 			$scope.replies = {};
 			$scope.comment = {};
 			$scope.reply = {};
-		}
+		};
 		var copyBookToModalModel = function(book) {
 			$scope.book.selector = book.selector;
 			$scope.book.created_time = $scope.parseDate(book.created_time);
@@ -130,7 +130,7 @@
 			$scope.book.publisher = book.publisher;
 			$scope.book.info_link = book.info_link;
 			$scope.book.img_path = book.img_path.slice(0, book.img_path.lastIndexOf('?'));
-		}
+		};
 		var getComment = function() {
 			$scope.comment = {};
 			Comment.get({ 'bookId': $scope.book._id }, function(comment) {
@@ -141,7 +141,7 @@
 				}
 				$scope.commentFlag = false;
 			});
-		}
+		};
 		$scope.createComment = function() {
 			$scope.comment.related_book = {};
 			$scope.comment.related_book._id = $scope.book._id;
@@ -150,7 +150,7 @@
 				$window.alert('등록이 완료 되었습니다.');
 				$scope.commentEditFlag = false;
 				getComment();
-			}
+			};
 			if (!$scope.commentFlag) {
 				Comment.save({ 'bookId': $scope.book._id, 'flag': 'new' }, $scope.comment, successor);
 				return;
@@ -205,7 +205,7 @@
 					$scope.$emit('working', false);
 				});
 			}
-		}
+		};
 		$scope.deleteReply = function(book, reply) {
 			var deleteFlag = $window.confirm('삭제하시겠습까?');
 			if (deleteFlag) {
@@ -219,7 +219,7 @@
 			}
 		};
 	}])
-	.controller('CreateBookCtrl', ['$scope', '$window', 'Book', function($scope, $window, Book) {
+	.controller('CreateBookCtrl', ['$scope', '$window', '$state', 'Book', function($scope, $window, $state, Book) {
 		$scope.createBoxFlag = false;
 		$scope.$parent.selected = 'bookNew';
 		$scope.book = {};
@@ -236,6 +236,7 @@
 				$window.alert('등록이 완료 되었습니다.');
 				$scope.book = {};
 				$scope.query = "";
+				$state.go('books');
 			});
 		};
 		$scope.searchBooks = function() {

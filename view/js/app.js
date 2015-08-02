@@ -16,23 +16,23 @@
 		$urlRouterProvider.otherwise('/home');
 		$stateProvider
 		.state('home', {
-			url: '/home',
-			templateUrl: 'static/partials/home.html',
+			url: '/bookbank/home',
+			templateUrl: 'bookbank/static/partials/home.html',
 			controller: 'HomeCtrl'
 		})
 		.state('books', {
-			url: '/books',
-			templateUrl: 'static/partials/books.html',
+			url: '/bookbank/books',
+			templateUrl: 'bookbank/static/partials/books.html',
 			controller: 'BooksCtrl'
 		})
 		.state('booksNew', {
-			url: '/books/new',
-			templateUrl: 'static/partials/create-book.html',
+			url: '/bookbank/books/new',
+			templateUrl: 'bookbank/static/partials/create-book.html',
 			controller: 'CreateBookCtrl'
 		})
 		.state('booksId', {
-			url: '/books/:id',
-			templateUrl: 'static/partials/book.html',
+			url: '/bookbank/books/:id',
+			templateUrl: 'bookbank/static/partials/book.html',
 			controller: 'BooksIdCtrl'
 		});
 

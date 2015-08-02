@@ -12,11 +12,11 @@ router.use(function(req, res, next) {
 		return;
 	}
 	if (req.session.user.id && req.baseUrl !== '/books' && req.url !== '/books') {
-		res.redirect('/books');
+		res.redirect('/bookbank/books');
 		return;
 	}
 	if (!req.session.user.id && req.baseUrl !== '/home' && req.url !== '/home') {
-		res.redirect('/home');
+		res.redirect('/bookbank/home');
 		return;
 	}
 	next();

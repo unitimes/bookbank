@@ -6,15 +6,15 @@ var express = require('express'),
 	db = mongoose.connection,
 	app = express();
 
-app.use(session({
+app.use('/bookbank', session({
 	secret: 'book-bank app',
 	saveUninitialized: false,
 	resave: false,
 	store: new MongoStore({ mongooseConnection: db })
 }));
-app.use(favicon(__dirname + '/favicon.ico'));
-app.use('/static', express.static(__dirname + '/view'));
-app.use(require('./controllers'));
+app.use('/bookbank', favicon(__dirname + '/favicon.ico'));
+app.use('/bookbank/static', express.static(__dirname + '/view'));
+app.use('/bookbank', require('./controllers'));
 
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function() {
