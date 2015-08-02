@@ -3,11 +3,11 @@ var express = require('express'),
 	msg = require('../enum/msg'),
 	router = express.Router(),
 	crypto = require('crypto'),
-	shasum = crypto.createHash('sha512'),
 	bodyParser = require('body-parser'),
 	user = require('../models/user');
 
 var makeHash = function(data) {
+	var shasum = crypto.createHash('sha512');
 	shasum.update(data, 'utf8');
 	return shasum.digest('base64');
 };

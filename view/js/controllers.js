@@ -14,9 +14,11 @@
 		$scope.homeModalTemplate = 'bookbank/static/partials/login.html';
 		$scope.changeTo = function(sPage) {
 			if (sPage === "login") {
+				$scope.user = {};
 				$scope.homeModalTemplate = 'bookbank/static/partials/login.html';
 				return;
 			}
+			$scope.rUser = {};
 			$scope.homeModalTemplate = 'bookbank/static/partials/register.html';
 			return;
 		};
