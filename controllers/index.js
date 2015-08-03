@@ -3,6 +3,7 @@ var express = require('express'),
 	router = express.Router();
 
 router.use(function(req, res, next) {
+	console.log(req.sessionID);
 	req.session.user = req.session.user || {};
 	next();
 });
@@ -29,7 +30,7 @@ router.use(function(req, res, next) {
 			req.baseUrl !== '/home' && req.url !== '/home' && 
 				req.baseUrl !== '/auth' && req.url !== '/auth' &&
 					req.baseUrl !== '/auth/new' && req.url !== '/auth/new') {
-		res.redirect('/home');
+		res.redirect('/bookbank/home');
 	return;
 	}
 	next();
@@ -52,6 +53,8 @@ router.use(function(err, req, res, next) {
 		res.status(200).json({ err: msg.errors[err.sendKey] });
 		return;
 	}
+	res.redirect('/bookbank/books');
+	throw err;
 });
 
 module.exports = router;

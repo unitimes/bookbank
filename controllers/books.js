@@ -117,8 +117,10 @@ router.delete('/:id/replies/:replyId', function(req, res, next) {
 });
 router.get('/:id/replies', function(req, res, next) {
 	reply.findByBookId(req.params.id, function(err, aReplies) {
-		if (err)
+		if (err) {
 			next(err);
+			return;
+		}
 		res.status(200).send(aReplies);
 	});
 });
